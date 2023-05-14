@@ -83,6 +83,11 @@ public class MyHashTable<K, V> {
         return false;
     }
     public K getKey(V value) {
-
+        for (LinkedList<HashNode<K, V>> list : chainArray) {
+            for (HashNode<K, V> node : list) {
+                if (node.getValue().equals(value)) return node.getKey();
+            }
+        }
+        return null;
     }
 }
