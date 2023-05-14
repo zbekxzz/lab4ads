@@ -47,75 +47,122 @@ public class MyHashTable<K, V> {
             return "{" + key + " " + value + "}";
         }
     }
-    private LinkedList<HashNode<K, V>>[] chainArray;
+    private LinkedList<HashNode<K, V>>[] chainArray; // linked list to store nodes
     private int M = 11;
-    private int size;
-
+    private int size; // table size
+    /**
+     * MyHashTable - constructor to create hash table
+     * @noparam
+     * @return void
+     */
     public MyHashTable() {
         this.size = 0;
         this.chainArray = new LinkedList[M];
     }
+    /**
+     * MyHashTable - constructor with additional M to change
+     * @param M - given M to change
+     * @return void
+     */
     public MyHashTable(int M) {
-        this.M = M;
+        this.M = M; // changing M field
         this.size = 0;
         this.chainArray = new LinkedList[M];
     }
+    /**
+     * hash - method to hashing key
+     * @param key - given key to hash
+     * @return int
+     */
     private int hash(K key) {
-        return key.hashCode() % M;
+        return key.hashCode() % M; // hashing
     }
+    /**
+     * put - method puts a value in hash table with key
+     * @param key - given key to put within
+     * @param value - given value to put
+     * @return void
+     */
     public void put(K key, V value) {
-        int index = hash(key);
+        int index = hash(key); // getting index with hashing
         if (chainArray[index] == null) {
-            chainArray[index] = new LinkedList<HashNode<K, V>>();
+            chainArray[index] = new LinkedList<HashNode<K, V>>(); // way if hash table in this index is null
         }
         for (HashNode<K, V> node : chainArray[index]) {
             if (node.getKey().equals(key)) {
-                node.setValue(value);
+                node.setValue(value); // putting value in node
                 return;
             }
         }
-        chainArray[index].add(new HashNode<K, V>(key, value));
+        chainArray[index].add(new HashNode<K, V>(key, value)); // putting node in hash table
         size++;
     }
+    /**
+     * get - method gets a value with key
+     * @param key - given key to get value within
+     * @return V - value type
+     */
     public V get(K key) {
-        int index = hash(key);
-        if (chainArray[index] == null) return null;
+        int index = hash(key); // getting index with hashing
+        if (chainArray[index] == null) return null; // way if index in hash table is null
 
         for (HashNode<K, V> node : chainArray[index]) {
-            if (node.getKey().equals(key)) return node.getValue();
+            if (node.getKey().equals(key)) return node.getValue(); // returning value if key exist
         }
-        return null;
+        return null; // returning null otherwise
     }
+    /**
+     * remove - method removes value with key
+     * @param key - given key to remove value within
+     * @return V - value type
+     */
     public V remove(K key) {
-        int index = hash(key);
-        if (chainArray[index] == null) return null;
+        int index = hash(key); // getting index with hashing
+        if (chainArray[index] == null) return null; // way if index in hash table is null
 
         for (HashNode<K, V> node : chainArray[index]) {
             if (node.getKey().equals(key)) {
-                chainArray[index].remove(node);
+                chainArray[index].remove(node); // removing node from hash table
                 size--;
-                return node.getValue();
+                return node.getValue(); // returning removed value
             }
         }
         size--;
-        return null;
+        return null; // returning null otherwise
     }
+    /**
+     * contains - method checks is hash table contains given value
+     * @param value - given value to check
+     * @return boolean
+     */
     public boolean contains(V value) {
         for (LinkedList<HashNode<K, V>> list : chainArray) {
             for (HashNode<K, V> node : list) {
-                if (node.getValue().equals(value)) return true;
+                if (node.getValue().equals(value)) return true; // returning true if value is in hash table
             }
         }
-        return false;
+        return false; // returning false otherwise
     }
+
+    /**
+     * getKey - method returns key of value
+     * @param value - given value to get key
+     * @return K - key type
+     */
     public K getKey(V value) {
         for (LinkedList<HashNode<K, V>> list : chainArray) {
             for (HashNode<K, V> node : list) {
-                if (node.getValue().equals(value)) return node.getKey();
+                if (node.getValue().equals(value)) return node.getKey(); // returning key of value if exist
             }
         }
-        return null;
+        return null; // returning null otherwise
     }
+
+    /**
+     * getSize - method returns size of hashTable
+     * @noparam
+     * @return int
+     */
     public int getSize() {
         return size;
     }
