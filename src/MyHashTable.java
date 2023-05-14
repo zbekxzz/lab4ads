@@ -52,7 +52,13 @@ public class MyHashTable<K, V> {
         size++;
     }
     public V get(K key) {
+        int index = hash(key);
+        if (chainArray[index] == null) return null;
 
+        for (HashNode<K, V> node : chainArray[index]) {
+            if (node.getKey().equals(key)) return node.getValue();
+        }
+        return null;
     }
     public V remove(K key) {
 
