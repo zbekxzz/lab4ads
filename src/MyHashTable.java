@@ -30,7 +30,9 @@ public class MyHashTable<K, V> {
         this.chainArray = new LinkedList[M];
     }
     public MyHashTable(int M) {
-
+        this.M = M;
+        this.size = 0;
+        this.chainArray = new LinkedList[M];
     }
     private int hash(K key) {
         return key.hashCode() % M;
