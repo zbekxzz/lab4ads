@@ -61,7 +61,18 @@ public class MyHashTable<K, V> {
         return null;
     }
     public V remove(K key) {
+        int index = hash(key);
+        if (chainArray[index] == null) return null;
 
+        for (HashNode<K, V> node : chainArray[index]) {
+            if (node.getKey().equals(key)) {
+                chainArray[index].remove(node);
+                size--;
+                return node.getValue();
+            }
+        }
+        size--;
+        return null;
     }
     public boolean contains(V value) {
 
